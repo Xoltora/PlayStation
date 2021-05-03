@@ -5,8 +5,6 @@ import com.example.playstationdemo.payload.ApiResponse;
 import com.example.playstationdemo.payload.ProductDto;
 import com.example.playstationdemo.repository.ProductRepository;
 import com.example.playstationdemo.service.ProductService;
-import com.example.playstationdemo.utills.CommonUtills;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderResultRepository extends JpaRepository<OrderResult, Long> {
 
-    @Query("select sum(p.price * od.count) from OrderDetail od left join Product p on " +
-            "p.id = od.product.id left join orders o on o.id = od.order.id")
+    @Query("select sum(p.price * od.count) from OrderDetail od join Product p on " +
+            "p.id = od.product.id join orders o on od.order.id = :id")
     Double getProductSum(@Param("id") Long id);
 }

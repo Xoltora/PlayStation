@@ -14,11 +14,11 @@ public class OrderResult extends AbsEntity{
     @ManyToOne
     private Order order;
 
-    private Double TotalSum;
+    private Long TotalSum;
 
-    private Double productSum;
+    private Long productSum;
 
-    private Double roomSum;
+    private Long roomSum;
 
     public void setOrder(Long id){
         this.order = new Order(id);

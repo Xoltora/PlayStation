@@ -20,7 +20,7 @@ public class ProductDto {
     private String name;
 
 //    @NotBlank(message = "price is required")
-    private Double price;
+    private Long price;
 
 //    @NotBlank(message = "category is required")
     private CategoryDto category;

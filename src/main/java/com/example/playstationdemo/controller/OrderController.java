@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -56,4 +57,13 @@ public class OrderController {
         ApiResponse response = orderService.detail(id);
         return ResponseEntity.status(response.isSuccess() ? 200 : 409).body(response);
     }
+
+//    @GetMapping("/report")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER')")
+//    public HttpEntity<?> report(@RequestParam(value = "fromDate", required = false)Date fromDate,
+//                                @RequestParam(value = "toDate", required = false) Date toDate){
+//        ApiResponse response = orderService.report(fromDate, toDate);
+//    }
+
+
 }

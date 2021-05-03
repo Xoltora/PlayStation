@@ -15,7 +15,7 @@ public class RoomType extends AbsEntity{
     @Column(nullable = false)
     private String name;
 
-    private Double price;
+    private Long price;
 
     @Column(name = "is_deleted")
     private boolean isDeleted = false;

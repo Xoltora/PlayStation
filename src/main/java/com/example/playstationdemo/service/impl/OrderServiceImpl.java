@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -119,9 +120,11 @@ public class OrderServiceImpl implements OrderService {
 
                 Double productSum = orderResultRepository.getProductSum(id);
 
-                dto.setRoomSum((double) Math.round(roomSum));
-                dto.setProductSum((double) Math.round(productSum));
-                dto.setTotalSum((double) Math.round(productSum + roomSum));
+                productSum = productSum == null ? 0 : productSum;
+
+                dto.setRoomSum(Math.round(roomSum));
+                dto.setProductSum(Math.round(productSum));
+                dto.setTotalSum(Math.round(productSum + roomSum));
 
                 roomRepository.saveState(order.getRoom().getId(), State.ON_VACATE);
                 orderResultRepository.save(dto.mapToEntity());
@@ -171,9 +174,13 @@ public class OrderServiceImpl implements OrderService {
 
                 Double productSum = orderResultRepository.getProductSum(id);
 
-                dto.setRoomSum((double) Math.round(roomSum));
-                dto.setProductSum((double) Math.round(productSum));
-                dto.setTotalSum((double) Math.round(productSum + roomSum));
+                System.out.println(productSum);
+
+                productSum = productSum == null ? 0 : productSum;
+
+                dto.setRoomSum(Math.round(roomSum));
+                dto.setProductSum(Math.round(productSum));
+                dto.setTotalSum(Math.round(productSum + roomSum));
 
                 result.setMessage("Successfully came!");
                 result.setSuccess(true);
@@ -210,5 +217,15 @@ public class OrderServiceImpl implements OrderService {
         return result;
     }
 
-
+//    @Override
+//    public ApiResponse report(Date fromDate, Date toDate) {
+//        ApiResponse result = new ApiResponse();
+//        try {
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            result.setMessage("Error on coming orders");
+//            result.setSuccess(false);
+//        }
+//    }
 }

@@ -10,9 +10,9 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderResultDto {
     private OrderDto order;
-    private Double TotalSum;
-    private Double productSum;
-    private Double roomSum;
+    private Long TotalSum;
+    private Long productSum;
+    private Long roomSum;
 
 
     public OrderResult mapToEntity(){

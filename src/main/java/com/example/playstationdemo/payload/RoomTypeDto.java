@@ -21,7 +21,7 @@ public class RoomTypeDto {
     private String name;
 
 //    @NotBlank(message = "price is required")
-    private Double price;
+    private Long price;
 
     private String createdBy;
 

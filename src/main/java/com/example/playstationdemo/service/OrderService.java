@@ -17,5 +17,7 @@ public interface OrderService {
 
     ApiResponse detail(Long id);
 
-//    ApiResponse report(Date fromDate, Date toDate);
+    ApiResponse report(Date fromDate, Date toDate);
+
+    ApiResponse reportDate(Date date);
 }

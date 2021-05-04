@@ -2,8 +2,8 @@ package com.example.playstationdemo.controller;
 
 import com.example.playstationdemo.payload.ApiResponse;
 import com.example.playstationdemo.payload.OrderDetailDto;
-import com.example.playstationdemo.payload.OrderDto;
 import com.example.playstationdemo.service.OrderService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,12 +58,22 @@ public class OrderController {
         return ResponseEntity.status(response.isSuccess() ? 200 : 409).body(response);
     }
 
-//    @GetMapping("/report")
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER')")
-//    public HttpEntity<?> report(@RequestParam(value = "fromDate", required = false)Date fromDate,
-//                                @RequestParam(value = "toDate", required = false) Date toDate){
-//        ApiResponse response = orderService.report(fromDate, toDate);
-//    }
+    @GetMapping("/report")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER')")
+    public HttpEntity<?> report(@RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
+                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate){
+        ApiResponse response = orderService.report(fromDate, toDate);
+        return ResponseEntity.status(response.isSuccess() ? 200 : 409).body(response);
+    }
 
+    @GetMapping("/reportDate")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER')")
+    public HttpEntity<?> reportDate(@RequestParam(value = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
+        ApiResponse response = orderService.reportDate(date);
+        return ResponseEntity.status(response.isSuccess() ? 200 : 409).body(response);
+    }
+
+//    @GetMapping("/reportDetail")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_WORKER')")
 
 }

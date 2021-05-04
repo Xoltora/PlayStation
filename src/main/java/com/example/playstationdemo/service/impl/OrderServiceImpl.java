@@ -5,6 +5,7 @@ import com.example.playstationdemo.entity.OrderDetail;
 import com.example.playstationdemo.entity.enums.State;
 import com.example.playstationdemo.payload.ApiResponse;
 import com.example.playstationdemo.payload.OrderDetailDto;
+import com.example.playstationdemo.payload.OrderReport;
 import com.example.playstationdemo.payload.OrderResultDto;
 import com.example.playstationdemo.repository.OrderDetailRepository;
 import com.example.playstationdemo.repository.OrderRepository;
@@ -14,11 +15,12 @@ import com.example.playstationdemo.service.OrderService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,11 +34,14 @@ public class OrderServiceImpl implements OrderService {
 
     private final RoomRepository roomRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository, OrderResultRepository orderResultRepository, RoomRepository roomRepository) {
+    private final EntityManager em;
+
+    public OrderServiceImpl(OrderRepository orderRepository, OrderDetailRepository orderDetailRepository, OrderResultRepository orderResultRepository, RoomRepository roomRepository, EntityManager em) {
         this.orderRepository = orderRepository;
         this.orderDetailRepository = orderDetailRepository;
         this.orderResultRepository = orderResultRepository;
         this.roomRepository = roomRepository;
+        this.em = em;
     }
 
     @Override
@@ -217,15 +222,87 @@ public class OrderServiceImpl implements OrderService {
         return result;
     }
 
-//    @Override
-//    public ApiResponse report(Date fromDate, Date toDate) {
-//        ApiResponse result = new ApiResponse();
-//        try {
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            result.setMessage("Error on coming orders");
-//            result.setSuccess(false);
-//        }
-//    }
+    @Override
+    public ApiResponse report(Date fromDate, Date toDate) {
+        ApiResponse result = new ApiResponse();
+        try {
+            String sql = "select cast(o.finishedAt as date) as sana, sum(ors.TotalSum) as summa, count(o) as countOrder from orders o\n" +
+                    "join OrderResult ors on  ors.order.id = o.id\n" +
+                    "where o.state = 'ON_VACATE' ";
+            StringBuilder sqlCondition = new StringBuilder();
+            if (fromDate == null && toDate == null){
+                sqlCondition.append("and cast(o.finishedAt as date) = cast(NOW() as date)");
+            }
+
+            if (fromDate != null){
+                sqlCondition.append(" and cast(o.finishedAt as date) >= :fromDate");
+            }
+
+            if (toDate != null){
+                sqlCondition.append(" and cast(o.finishedAt as date) <= :toDate");
+            }
+
+            sqlCondition.append(" group by sana order by sana ASC");
+
+            sql += sqlCondition;
+
+            Query query = em.createQuery(sql);
+
+            if (fromDate != null){
+                query.setParameter("fromDate", fromDate);
+            }
+
+            if (toDate != null){
+                query.setParameter("toDate", toDate);
+            }
+
+            List<Object[]> resultList = query.getResultList();
+
+            List<OrderReport> reportList = new ArrayList<>();
+
+            for (Object[] o : resultList) {
+                OrderReport orderReport = new OrderReport();
+                orderReport.setSana((Date) o[0]);
+                orderReport.setSumma((Long) o[1]);
+                orderReport.setCountOrder((Long) o[2]);
+                reportList.add(orderReport);
+            }
+
+            result.setMessage("Successfully came reports");
+            result.setSuccess(true);
+            result.setData(reportList);
+        }catch (Exception e){
+            e.printStackTrace();
+            result.setMessage("Error on coming orders");
+            result.setSuccess(false);
+        }
+        return result;
+    }
+
+    @Override
+    public ApiResponse reportDate(Date date) {
+        ApiResponse result = new ApiResponse();
+        try {
+            List<Object[]> objects = orderRepository.getReport(date);
+            List<Map> list = new ArrayList<>();
+            Map map = new HashMap();
+            for (Object[] object : objects) {
+                map.put("id", object[0]);
+                map.put("startAt", object[1]);
+                map.put("finishAt", object[2]);
+                map.put("productSum", object[3]);
+                map.put("roomSum", object[4]);
+                map.put("totalSum", object[5]);
+                list.add(map);
+            }
+            result.setMessage("Successfully came!");
+            result.setSuccess(true);
+            result.setData(list);
+        }catch (Exception e){
+            e.printStackTrace();
+            result.setMessage("Error on coming result");
+            result.setSuccess(false);
+        }
+        return result;
+    }
 }

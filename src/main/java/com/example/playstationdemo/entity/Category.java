@@ -1,6 +1,7 @@
 package com.example.playstationdemo.entity;
 
-import com.example.playstationdemo.payload.CategoryDto;
+import com.example.playstationdemo.entity.audit.UserDateAudit;
+import com.example.playstationdemo.payload.dto.CategoryDto;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Category extends AbsEntity {
+public class Category extends UserDateAudit {
     @Column(nullable = false)
     private String name;
 

@@ -1,5 +1,6 @@
 package com.example.playstationdemo.entity;
 
+import com.example.playstationdemo.entity.audit.UserDateAudit;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class OrderResult extends AbsEntity{
+public class OrderResult extends UserDateAudit {
     @ManyToOne
     private Order order;
 

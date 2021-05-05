@@ -1,8 +1,8 @@
 package com.example.playstationdemo.controller;
 
 import com.example.playstationdemo.entity.User;
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.CategoryDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.CategoryDto;
 import com.example.playstationdemo.secret.CurrentUser;
 import com.example.playstationdemo.service.CategoryService;
 import com.example.playstationdemo.utills.AppConst;

@@ -1,4 +1,4 @@
-package com.example.playstationdemo.payload;
+package com.example.playstationdemo.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

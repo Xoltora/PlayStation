@@ -1,7 +1,7 @@
 package com.example.playstationdemo.controller;
 
-import com.example.playstationdemo.payload.ResToken;
-import com.example.playstationdemo.payload.SignIn;
+import com.example.playstationdemo.payload.response.ResToken;
+import com.example.playstationdemo.payload.request.SignInRequest;
 import com.example.playstationdemo.service.impl.AuthService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +23,8 @@ public class AuthController {
     }
 
     @PostMapping
-    public HttpEntity<?> login(@Valid @RequestBody SignIn signIn){
-        ResToken resToken = authService.signIn(signIn);
+    public HttpEntity<?> login(@Valid @RequestBody SignInRequest signInRequest){
+        ResToken resToken = authService.signIn(signInRequest);
         return ResponseEntity.status(resToken != null ? 200 : 401).body(resToken);
     }
 }

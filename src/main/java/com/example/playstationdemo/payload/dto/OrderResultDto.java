@@ -1,6 +1,7 @@
-package com.example.playstationdemo.payload;
+package com.example.playstationdemo.payload.dto;
 
 import com.example.playstationdemo.entity.OrderResult;
+import com.example.playstationdemo.payload.dto.OrderDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;

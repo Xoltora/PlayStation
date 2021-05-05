@@ -2,14 +2,11 @@ package com.example.playstationdemo.service.impl;
 
 import com.example.playstationdemo.entity.Room;
 import com.example.playstationdemo.entity.enums.State;
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.RoomDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.RoomDto;
 import com.example.playstationdemo.repository.RoomRepository;
 import com.example.playstationdemo.service.RoomService;
-import com.example.playstationdemo.utills.CommonUtills;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;

@@ -1,4 +1,4 @@
-package com.example.playstationdemo.payload;
+package com.example.playstationdemo.payload.dto;
 
 import com.example.playstationdemo.entity.Order;
 import com.example.playstationdemo.entity.enums.State;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -18,8 +19,8 @@ import java.time.LocalDateTime;
 public class OrderDto {
     private Long id;
     private RoomDto room;
-    private LocalDateTime startAt;
-    private LocalDateTime finishAt;
+    private Date startAt;
+    private Date finishAt;
     private State state;
 
     public OrderDto(Long id){
@@ -29,7 +30,7 @@ public class OrderDto {
         Order order = new Order();
         order.setRoom(this.room.getId());
         order.setState(State.ON_PROCESS);
-        order.setStartAt(LocalDateTime.now());
+        order.setStartAt(new Date());
         return order;
     }
 }

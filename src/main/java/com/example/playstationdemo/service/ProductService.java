@@ -1,7 +1,7 @@
 package com.example.playstationdemo.service;
 
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.ProductDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.ProductDto;
 
 public interface ProductService {
     ApiResponse save(ProductDto dto);

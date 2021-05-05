@@ -1,13 +1,14 @@
-package com.example.playstationdemo.payload;
+package com.example.playstationdemo.payload.dto;
 
 import com.example.playstationdemo.entity.Product;
+import com.example.playstationdemo.payload.dto.CategoryDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -27,7 +28,7 @@ public class ProductDto {
 
     private String createdBy;
 
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     public Product mapToEntity(){
         Product product = new Product();

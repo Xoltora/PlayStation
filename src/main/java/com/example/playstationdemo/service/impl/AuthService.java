@@ -1,8 +1,8 @@
 package com.example.playstationdemo.service.impl;
 
 import com.example.playstationdemo.entity.User;
-import com.example.playstationdemo.payload.ResToken;
-import com.example.playstationdemo.payload.SignIn;
+import com.example.playstationdemo.payload.response.ResToken;
+import com.example.playstationdemo.payload.request.SignInRequest;
 import com.example.playstationdemo.repository.UserRepository;
 import com.example.playstationdemo.secret.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +34,10 @@ public class AuthService implements UserDetailsService {
         return userRepository.findByLogin(s).orElseThrow(() -> new UsernameNotFoundException(s + " not found"));
     }
 
-    public ResToken signIn(SignIn signIn) {
+    public ResToken signIn(SignInRequest signInRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(signIn.getUsername(), signIn.getPassword())
+                    new UsernamePasswordAuthenticationToken(signInRequest.getUsername(), signInRequest.getPassword())
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             User user = (User) authentication.getPrincipal();

@@ -1,4 +1,4 @@
-package com.example.playstationdemo.payload;
+package com.example.playstationdemo.payload.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderReport {
-    private Date sana;
+    private Date date;
     private Long summa;
     private Long countOrder;
 }

@@ -1,8 +1,8 @@
 package com.example.playstationdemo.service.impl;
 
 import com.example.playstationdemo.entity.User;
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.UserDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.UserDto;
 import com.example.playstationdemo.repository.UserRepository;
 import com.example.playstationdemo.service.UserService;
 import com.example.playstationdemo.utills.CommonUtills;

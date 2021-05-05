@@ -1,6 +1,7 @@
 package com.example.playstationdemo.entity;
 
-import com.example.playstationdemo.payload.RoomTypeDto;
+import com.example.playstationdemo.entity.audit.UserDateAudit;
+import com.example.playstationdemo.payload.dto.RoomTypeDto;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Entity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class RoomType extends AbsEntity{
+public class RoomType extends UserDateAudit {
     @Column(nullable = false)
     private String name;
 

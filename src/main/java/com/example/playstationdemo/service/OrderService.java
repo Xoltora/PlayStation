@@ -1,7 +1,7 @@
 package com.example.playstationdemo.service;
 
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.OrderDetailDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.OrderDetailDto;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +17,7 @@ public interface OrderService {
 
     ApiResponse detail(Long id);
 
-    ApiResponse report(Date fromDate, Date toDate);
+    ApiResponse report(Date fromDate, Date toDate, Integer size, Integer page, Long currentPage);
 
-    ApiResponse reportDate(Date date);
+    ApiResponse findAll(Date date, Integer page, Integer size, Integer currentPage);
 }

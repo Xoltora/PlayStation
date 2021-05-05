@@ -1,4 +1,4 @@
-package com.example.playstationdemo.entity;
+package com.example.playstationdemo.entity.audit;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,20 +16,13 @@ import java.util.UUID;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class AbsEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserDateAudit extends DateAudit {
 
-    @CreatedDate
-    private LocalDateTime createdAt;
-
+    @Column(name = "created_by")
     @CreatedBy
     private String createdBy;
 
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
+    @Column(name = "updated_by")
     @LastModifiedBy
     private String updatedBy;
 }

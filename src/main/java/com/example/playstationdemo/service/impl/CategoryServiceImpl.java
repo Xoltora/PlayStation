@@ -2,13 +2,11 @@ package com.example.playstationdemo.service.impl;
 
 import com.example.playstationdemo.entity.Category;
 import com.example.playstationdemo.entity.User;
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.CategoryDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.CategoryDto;
 import com.example.playstationdemo.repository.CategoryRepository;
 import com.example.playstationdemo.service.CategoryService;
-import com.example.playstationdemo.utills.CommonUtills;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;

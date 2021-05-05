@@ -1,8 +1,8 @@
 package com.example.playstationdemo.entity;
 
-import com.example.playstationdemo.payload.ProductDto;
+import com.example.playstationdemo.entity.audit.UserDateAudit;
+import com.example.playstationdemo.payload.dto.ProductDto;
 import lombok.*;
-import org.springframework.security.core.parameters.P;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Product extends AbsEntity{
+public class Product extends UserDateAudit {
     @Column(nullable = false)
     private String name;
 

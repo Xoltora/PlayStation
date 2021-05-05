@@ -1,28 +1,28 @@
 package com.example.playstationdemo.entity;
 
+import com.example.playstationdemo.entity.audit.UserDateAudit;
 import com.example.playstationdemo.entity.enums.State;
-import com.example.playstationdemo.payload.OrderDto;
+import com.example.playstationdemo.payload.dto.OrderDto;
 import lombok.*;
-import org.aspectj.weaver.ast.Or;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "orders")
-public class Order extends AbsEntity{
+@Entity
+@Table(name = "orders")
+public class Order extends UserDateAudit {
     @ManyToOne
     private Room room;
 
-    private LocalDateTime finishedAt;
+    private Date finishedAt;
 
-    private LocalDateTime startAt;
+    private Date startAt;
 
     @Enumerated(EnumType.STRING)
     private State state;
@@ -47,11 +47,11 @@ public class Order extends AbsEntity{
 
     public void finish(){
         this.setState(State.ON_VACATE);
-        this.setFinishedAt(LocalDateTime.now());
+        this.setFinishedAt(new Date());
     }
 
     public Order start(Long id){
-        this.setStartAt(LocalDateTime.now());
+        this.setStartAt(new Date());
         this.setRoom(id);
         this.setState(State.ON_PROCESS);
         return this;

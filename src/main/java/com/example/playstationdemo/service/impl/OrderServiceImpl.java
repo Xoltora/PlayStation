@@ -3,23 +3,22 @@ package com.example.playstationdemo.service.impl;
 import com.example.playstationdemo.entity.Order;
 import com.example.playstationdemo.entity.OrderDetail;
 import com.example.playstationdemo.entity.enums.State;
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.OrderDetailDto;
-import com.example.playstationdemo.payload.OrderReport;
-import com.example.playstationdemo.payload.OrderResultDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.OrderDetailDto;
+import com.example.playstationdemo.payload.response.OrderReport;
+import com.example.playstationdemo.payload.dto.OrderResultDto;
 import com.example.playstationdemo.repository.OrderDetailRepository;
 import com.example.playstationdemo.repository.OrderRepository;
 import com.example.playstationdemo.repository.OrderResultRepository;
 import com.example.playstationdemo.repository.RoomRepository;
 import com.example.playstationdemo.service.OrderService;
+import com.example.playstationdemo.utills.CommonUtills;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -112,12 +111,8 @@ public class OrderServiceImpl implements OrderService {
                 OrderResultDto dto = new OrderResultDto();
                 dto.setOrder(order.mapToDto());
 
-                Long finish = order.getFinishedAt().atZone(ZoneId.systemDefault())
-                        .toInstant()
-                        .toEpochMilli();
-                Long start = order.getStartAt().atZone(ZoneId.systemDefault())
-                        .toInstant()
-                        .toEpochMilli();
+                Long finish = order.getFinishedAt().getTime();
+                Long start = order.getStartAt().getTime();
 
                 double divergence = (finish - start) / 1000.0;
 
@@ -165,13 +160,9 @@ public class OrderServiceImpl implements OrderService {
 
                 dto.setOrder(order.get().mapToDto());
 
-                Long now = LocalDateTime.now().atZone(ZoneId.systemDefault())
-                        .toInstant()
-                        .toEpochMilli();
+                Long now = System.currentTimeMillis();
 
-                Long start = order.get().getStartAt().atZone(ZoneId.systemDefault())
-                        .toInstant()
-                        .toEpochMilli();
+                Long start = order.get().getStartAt().getTime();
 
                 double divergence = (now - start) / 1000.0;
 
@@ -223,15 +214,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ApiResponse report(Date fromDate, Date toDate) {
+    public ApiResponse report(Date fromDate, Date toDate, Integer size, Integer page, Long currentPage) {
         ApiResponse result = new ApiResponse();
         try {
-            String sql = "select cast(o.finishedAt as date) as sana, sum(ors.TotalSum) as summa, count(o) as countOrder from orders o\n" +
+            String sql = "SELECT cast(o.finishedAt AS date) AS day, SUM (ors.TotalSum) AS summ, count(o) as countOrder from Order o\n" +
                     "join OrderResult ors on  ors.order.id = o.id\n" +
                     "where o.state = 'ON_VACATE' ";
             StringBuilder sqlCondition = new StringBuilder();
             if (fromDate == null && toDate == null){
-                sqlCondition.append("and cast(o.finishedAt as date) = cast(NOW() as date)");
+                sqlCondition.append("AND cast(o.finishedAt AS date) = cast(NOW() AS DATE)");
             }
 
             if (fromDate != null){
@@ -242,18 +233,38 @@ public class OrderServiceImpl implements OrderService {
                 sqlCondition.append(" and cast(o.finishedAt as date) <= :toDate");
             }
 
-            sqlCondition.append(" group by sana order by sana ASC");
+            sqlCondition.append(" group by day order by day ASC");
 
             sql += sqlCondition;
 
+            String sqlCount = "SELECT count(*) from Order o\n" +
+                    "join OrderResult ors on ors.order.id = o.id\n" +
+                    "where o.state = 'ON_VACATE' " + sqlCondition;
+
             Query query = em.createQuery(sql);
+
+            Query countQuery = em.createQuery(sqlCount);
 
             if (fromDate != null){
                 query.setParameter("fromDate", fromDate);
+                countQuery.setParameter("fromDate", fromDate);
             }
 
             if (toDate != null){
                 query.setParameter("toDate", toDate);
+                countQuery.setParameter("toDate", toDate);
+            }
+
+            Long count = (Long) countQuery.getSingleResult();
+
+            currentPage = currentPage != null ? currentPage : 0;
+
+            query.setFirstResult((int) (currentPage * size));
+
+            if (currentPage * size > count) {
+                query.setMaxResults((int) ((currentPage * size) - count));
+            } else {
+                query.setMaxResults(size);
             }
 
             List<Object[]> resultList = query.getResultList();
@@ -262,7 +273,7 @@ public class OrderServiceImpl implements OrderService {
 
             for (Object[] o : resultList) {
                 OrderReport orderReport = new OrderReport();
-                orderReport.setSana((Date) o[0]);
+                orderReport.setDate((Date) o[0]);
                 orderReport.setSumma((Long) o[1]);
                 orderReport.setCountOrder((Long) o[2]);
                 reportList.add(orderReport);
@@ -271,6 +282,9 @@ public class OrderServiceImpl implements OrderService {
             result.setMessage("Successfully came reports");
             result.setSuccess(true);
             result.setData(reportList);
+            result.setTotalPages(count / size + 1);
+            result.setTotalElements(count);
+            result.setCurrentPage(currentPage);
         }catch (Exception e){
             e.printStackTrace();
             result.setMessage("Error on coming orders");
@@ -280,10 +294,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ApiResponse reportDate(Date date) {
+    public ApiResponse findAll(Date date, Integer page, Integer size, Integer currentPage) {
         ApiResponse result = new ApiResponse();
         try {
-            List<Object[]> objects = orderRepository.getReport(date);
+            Page<Object[]> objects = orderRepository.getReport(date, CommonUtills.simplePageable(page, size));
             List<Map> list = new ArrayList<>();
             Map map = new HashMap();
             for (Object[] object : objects) {
@@ -298,6 +312,9 @@ public class OrderServiceImpl implements OrderService {
             result.setMessage("Successfully came!");
             result.setSuccess(true);
             result.setData(list);
+            result.setTotalPages(objects.getTotalPages());
+            result.setTotalElements(objects.getTotalElements());
+            result.setCurrentPage(currentPage != null ? currentPage : 0);
         }catch (Exception e){
             e.printStackTrace();
             result.setMessage("Error on coming result");

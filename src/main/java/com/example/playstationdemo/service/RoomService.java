@@ -1,8 +1,8 @@
 package com.example.playstationdemo.service;
 
 import com.example.playstationdemo.entity.enums.State;
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.RoomDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.RoomDto;
 
 public interface RoomService {
     ApiResponse save(RoomDto dto);

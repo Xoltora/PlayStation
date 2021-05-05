@@ -1,6 +1,7 @@
 package com.example.playstationdemo.entity;
 
-import com.example.playstationdemo.payload.UserDto;
+import com.example.playstationdemo.entity.audit.UserDateAudit;
+import com.example.playstationdemo.payload.dto.UserDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Set;
 
@@ -17,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "users")
-public class User extends AbsEntity implements UserDetails {
+public class User extends UserDateAudit implements UserDetails {
     @Column(nullable = false)
 //    @NotBlank(message = "FIO is mandatory")
     private String fio;

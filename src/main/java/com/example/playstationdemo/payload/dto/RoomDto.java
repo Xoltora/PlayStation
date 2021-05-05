@@ -1,12 +1,12 @@
-package com.example.playstationdemo.payload;
+package com.example.playstationdemo.payload.dto;
 
 import com.example.playstationdemo.entity.Room;
 import com.example.playstationdemo.entity.enums.State;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -23,7 +23,7 @@ public class RoomDto {
 
     private String createdBy;
 
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     public Room mapToEntity(){
         Room room = new Room();

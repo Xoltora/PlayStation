@@ -1,8 +1,8 @@
 package com.example.playstationdemo.service;
 
 import com.example.playstationdemo.entity.User;
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.CategoryDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.CategoryDto;
 
 public interface CategoryService {
 

@@ -1,8 +1,8 @@
 package com.example.playstationdemo.service.impl;
 
 import com.example.playstationdemo.entity.RoomType;
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.RoomTypeDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.RoomTypeDto;
 import com.example.playstationdemo.repository.RoomTypeRepository;
 import com.example.playstationdemo.service.RoomTypeService;
 import org.springframework.context.annotation.Lazy;

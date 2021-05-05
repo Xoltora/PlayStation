@@ -1,11 +1,10 @@
 package com.example.playstationdemo.controller;
 
 import com.example.playstationdemo.entity.enums.State;
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.RoomDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.RoomDto;
 import com.example.playstationdemo.service.RoomService;
 import com.example.playstationdemo.utills.AppConst;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

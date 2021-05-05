@@ -1,6 +1,7 @@
 package com.example.playstationdemo.entity;
 
-import com.example.playstationdemo.payload.OrderDetailDto;
+import com.example.playstationdemo.entity.audit.UserDateAudit;
+import com.example.playstationdemo.payload.dto.OrderDetailDto;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -11,7 +12,7 @@ import javax.persistence.ManyToOne;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class OrderDetail extends AbsEntity{
+public class OrderDetail extends UserDateAudit {
     @ManyToOne
     private Order order;
 

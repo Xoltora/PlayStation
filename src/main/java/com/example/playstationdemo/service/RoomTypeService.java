@@ -1,7 +1,7 @@
 package com.example.playstationdemo.service;
 
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.RoomTypeDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.RoomTypeDto;
 
 public interface RoomTypeService {
     ApiResponse save(RoomTypeDto dto);

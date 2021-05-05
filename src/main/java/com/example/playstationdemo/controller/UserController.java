@@ -1,7 +1,7 @@
 package com.example.playstationdemo.controller;
 
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.UserDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.UserDto;
 import com.example.playstationdemo.service.UserService;
 import com.example.playstationdemo.utills.AppConst;
 import org.springframework.http.HttpEntity;

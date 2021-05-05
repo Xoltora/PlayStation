@@ -1,4 +1,4 @@
-package com.example.playstationdemo.payload;
+package com.example.playstationdemo.payload.dto;
 
 import com.example.playstationdemo.entity.OrderDetail;
 import lombok.Getter;

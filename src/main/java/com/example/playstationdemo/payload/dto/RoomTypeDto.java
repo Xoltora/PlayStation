@@ -1,4 +1,4 @@
-package com.example.playstationdemo.payload;
+package com.example.playstationdemo.payload.dto;
 
 import com.example.playstationdemo.entity.RoomType;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,7 +26,7 @@ public class RoomTypeDto {
 
     private String createdBy;
 
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
     public RoomType mapToEntity(){
         RoomType type = new RoomType();

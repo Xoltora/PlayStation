@@ -1,7 +1,7 @@
 package com.example.playstationdemo.controller;
 
-import com.example.playstationdemo.payload.ApiResponse;
-import com.example.playstationdemo.payload.RoomTypeDto;
+import com.example.playstationdemo.payload.response.ApiResponse;
+import com.example.playstationdemo.payload.dto.RoomTypeDto;
 import com.example.playstationdemo.service.RoomTypeService;
 import com.example.playstationdemo.utills.AppConst;
 import org.springframework.context.annotation.Lazy;

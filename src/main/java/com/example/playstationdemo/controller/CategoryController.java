@@ -67,4 +67,9 @@ public class CategoryController {
         ApiResponse response = categoryService.filter(name, page, size, currentPage);
         return ResponseEntity.status(response.isSuccess() ? 200 : 409).body(response);
     }
+
+    @GetMapping("/one")
+    public HttpEntity<?> one(){
+        return ResponseEntity.ok("get first");
+    }
 }

@@ -14,7 +14,6 @@ import java.util.Collections;
 
 @Component
 public class DataLoader implements CommandLineRunner {
-
     private final RoleRepository roleRepository;
 
     private final UserRepository userRepository;
